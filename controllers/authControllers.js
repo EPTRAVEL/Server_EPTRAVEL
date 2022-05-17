@@ -12,7 +12,7 @@ const authController = {
       filename: (req, file, cb) => {
         cb(null, `${Date.now()}--${file.originalname}`);
         // console.log(file.originalname)
-        imgPath = 'AvatarOfUser/'+`${Date.now()}--${file.originalname}`;
+        imgPath = 'avatar user/'+`${Date.now()}--${file.originalname}`;
       },
     });
     maxSize = 10 * 1024 * 1024;

@@ -46,8 +46,8 @@ app.use("/v1/tour", tourRoute);
 
 
 // cho phép dùng ảnh của user
-app.use(express.static("public"));
-app.use("/AvatarOfUser", express.static("assets/image/avatar user"));
+const path = require('path');
+app.use(express.static(path.join(__dirname, '/assets/image')))
 
 // const testFolder = "./assets/image/avatar user";
 // const fs = require("fs");
