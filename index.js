@@ -53,7 +53,7 @@ app.use("/AvatarOfUser", express.static("assets/image/avatar user"));
 // const fs = require("fs");
 
 //Get all tour
-app.use("/Tours", tourRoute);
+app.use("/Tours", tourRoute);   
 
 app.listen(8000, () => {
     console.log("Server is running.....")
