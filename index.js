@@ -13,7 +13,7 @@ dotenv.config();
 
 
 //CONNECT DB
-mongoose.connect((process.env.MONGODB_URL), () =>{
+mongoose.connect(('mongodb://localhost:27017/Web2_EPTravel'), () =>{
     console.log("connect ss")
 })
 
