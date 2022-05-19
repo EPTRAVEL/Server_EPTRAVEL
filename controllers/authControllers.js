@@ -37,18 +37,18 @@ const authController = {
     //upload img file
 
     const salt = await bcrypt.genSalt(10);
-    const hashed = await bcrypt.hash(req.body.passWord, salt);
+    const hashed = await bcrypt.hash(req.body.pass, salt);
     //Create new user
     let newUser = await new User({
       hoTen: req.body.hoTen,
       gioiTinh: req.body.gioiTinh,
       ngaySinh: req.body.ngaySinh,
       diDong: req.body.diDong,
-      CMND: req.body.CMND,
+      cMND: req.body.cMND,
       ngayCap: req.body.ngayCap,
       email: req.body.email,
       diaChi: req.body.diaChi,
-      passWord: hashed,
+      pass: hashed,
       avarImg: imgPath,
     });
     try {

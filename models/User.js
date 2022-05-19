@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    CMND: {
+    cMND: {
       type: String,
       required: true,
       unique: true,
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    passWord: {
+    pass: {
       type: String,
       required: true,
     },
