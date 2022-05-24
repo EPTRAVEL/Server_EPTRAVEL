@@ -6,6 +6,10 @@ const tourSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
+    ma_tour: {
+        type: String, 
+        required: true
+    },
     images: {
         type: [String]
     },

@@ -14,7 +14,7 @@ const userController = {
   //delete user
   deleteUser: async (req, res) => {
     try {
-      const users = await User.findById(req.params.id);
+      await User.remove({ _id: req.params.id });
       res.status(200).json({ message: "Delete Successfully!!!" });
     } catch (err) {
       res.status(500).json(err);

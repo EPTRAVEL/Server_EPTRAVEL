@@ -10,9 +10,9 @@ router.get('/' ,userController.getAllUsers);
 
 //delete users
 // có xác thực
-router.delete('/:id', middlewareController.verifyTokenAndAdminAuth, userController.deleteUser);
-
-// ko có xác thực để test
 router.delete('/:id', userController.deleteUser);
+// router.delete('/:id', middlewareController.verifyTokenAndAdminAuth, userController.deleteUser);
+
+
 
 module.exports = router;
