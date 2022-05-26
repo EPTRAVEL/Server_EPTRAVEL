@@ -122,6 +122,22 @@ const tourControllers = {
     }
   },
 
+  getTourKhuyenMai: async (req, res) => {
+    try {
+      // const tours = await Tour.find();
+      // res.status(200).json(req.body);
+
+      Tour.find({giamgia : /^(1|2|3|4|5|6|7|8|9)/ })
+        .then((data) => {
+          res.json(data);
+        })
+        .catch((error) => {
+          res.json({ Error: error.message });
+        });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
   patchTour: async (req, res) => {
     try {
       // theo mongod
