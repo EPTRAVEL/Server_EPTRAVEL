@@ -1,70 +1,71 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const tourSchema = new mongoose.Schema({
-    
+const tourSchema = new mongoose.Schema(
+  {
     ten_tour: {
-        type: String, 
-        required: true
+      type: String,
+    //   required: true
     },
     ma_tour: {
-        type: String, 
-        required: true
+      type: String,
+    //   required: true
     },
     images: {
-        type: [String]
+      type: [String],
     },
     noikhoihanh: {
-        type: String, 
+      type: String,
     },
     sochoconnhan: {
-        type: String, 
+      type: String,
     },
     diemden: {
-        type: String, 
+      type: String,
     },
     ngaykhoihanh: {
-        type: String, 
+      type: String,
     },
     noidungchitiet: {
-        type: String, 
+      type: String,
     },
     diadiemthamquan: {
-        type: String, 
+      type: String,
     },
     phuongtiendichuyen: {
-        type: String, 
+      type: String,
     },
     khachsan: {
-        type: String, 
+      type: String,
     },
     lichtrinh: {
-        type: String, 
+      type: String,
     },
     giatiennguoilon: {
-        type: String, 
+      type: String,
     },
     giatientreem: {
-        type: String, 
+      type: String,
     },
     giatientrenho: {
-        type: String, 
+      type: String,
     },
     giatienembe: {
-        type: String, 
+      type: String,
     },
     giamgia: {
-        type: String, 
+      type: String,
     },
     phuthu: {
-        type: String, 
+      type: String,
     },
     quocgia: {
-        type: String, 
+      type: String,
     },
     khuvuc: {
-        type: String, 
-    }
-    
-})
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("Tour", tourSchema)
+module.exports = mongoose.model("Tour", tourSchema);

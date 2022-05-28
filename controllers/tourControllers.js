@@ -1,41 +1,69 @@
 const Tour = require("../models/Tour");
-
+const multer = require("multer");
+var imgPathArr = []; 
 const tourControllers = {
-  addTour: async (req, res) => {
+  uploadTourImg: async (req, res, next) => {
+    var storage = multer.diskStorage({
+      destination: "assets/image/tours",
+      filename: (req, file, cb) => {
+        let nameTemp = `${Date.now()}-${file.originalname}`
+        cb(null, nameTemp);
+        imgPathArr.push(nameTemp);
+      },
+    });
+    var upload = multer({
+      storage: storage,
+    }).any("tourImg");
+    upload(req, res, (err) => {
+      if (err) {
+        console.log("Lỗi upload 1: " + err.message)
+      } else {
+        console.log(upload = multer({
+          storage: storage,
+        }).array("tourImg1"))
+        next();
+      }
+    });
+  },
+  
+ 
+
+  addTour: async (req, res, next)=> {
+    console.log(req.body.ten_tour)
+    let newTour = await new Tour({
+      ten_tour: req.body.ten_tour, 
+      ma_tour: req.body.ma_tour,
+      noikhoihanh: req.body.noikhoihanh,
+      sochoconnhan: req.body.sochoconnhan,
+      diemden: req.body.diemden,
+      ngaykhoihanh: req.body.ngaykhoihanh,
+      noidungchitiet: req.body.noidungchitiet,
+      diadiemthamquan: req.body.diadiemthamquan,
+      phuongtiendichuyen: req.body.phuongtiendichuyen,
+      khachsan: req.body.khachsan,
+      lichtrinh: req.body.lichtrinh,
+      giatiennguoilon: req.body.giatiennguoilon,
+      giatientreem: req.body.giatientreem,
+      giatientrenho: req.body.giatientrenho,
+      giatienembe: req.body.giatienembe,
+      giamgia: req.body.giamgia,
+      phuthu: req.body.phuthu,
+      quocgia: req.body.quocgia,
+      khuvuc: req.body.khuvuc,
+      images: imgPathArr,
+    });
+    
     try {
-      const newTour = await new Tour({
-        ten_tour: req.body.ten_tour,
-        ma_tour: req.body.ma_tour,
-        images: req.body.images,
-        noikhoihanh: req.body.noikhoihanh,
-        sochoconnhan: req.body.sochoconnhan,
-        diemden: req.body.diemden,
-        ngaykhoihanh: req.body.ngaykhoihanh,
-        noidungchitiet: req.body.noidungchitiet,
-        diadiemthamquan: req.body.diadiemthamquan,
-        phuongtiendichuyen: req.body.phuongtiendichuyen,
-        khachsan: req.body.khachsan,
-        lichtrinh: req.body.lichtrinh,
-        giatiennguoilon: req.body.giatiennguoilon,
-        giatientreem: req.body.giatientreem,
-        giatientrenho: req.body.giatientrenho,
-        giatienembe: req.body.giatienembe,
-        giamgia: req.body.giamgia,
-        phuthu: req.body.phuthu,
-        quocgia: req.body.quocgia,
-        khuvuc: req.body.khuvuc,
-      });
+      
       const tour = await newTour.save();
-      res.status(200).json({ message: "success" });
+      res.status(200).json({ message: "success", newTour });
+      next()
     } catch (err) {
       res.status(500).json(err);
     }
   },
   getAllTour: async (req, res) => {
     try {
-      // const tours = await Tour.find();
-      // res.status(200).json(req.body);
-
       Tour.find({})
         .then((data) => {
           res.json(data);
@@ -47,29 +75,40 @@ const tourControllers = {
       res.status(500).json(err);
     }
   },
+  reSetImg: async (req, res, next) => {
+    imgPathArr = []
+  },
   getCondition: async (req, res) => {
     try {
-      // const tours = await Tour.find();
-      // res.status(200).json(req.body);
-      var condition = ""
-      var Vquocgia = ""
-      var Vkhuvuc = ""
-      var Vnoikhoihanh = ""
-      var Vdiemden = ""
+      var condition = "";
+      var Vquocgia = "";
+      var Vkhuvuc = "";
+      var Vnoikhoihanh = "";
+      var Vdiemden = "";
       var Vthoigian = "";
-      req.params.thoigian=="all" ? Vthoigian = "" : Vthoigian = req.params.thoigian;
-      req.params.diemden=="all" ? Vdiemden = "" : Vdiemden = req.params.diemden;
-      req.params.noikhoihanh=="all" ? Vnoikhoihanh = "" : Vnoikhoihanh = req.params.noikhoihanh;
-      req.params.khuvuc=="all" ? Vkhuvuc = "" : Vkhuvuc = req.params.khuvuc;
-      req.params.quocgia=="all" ? Vquocgia = "" : Vquocgia = req.params.quocgia;
+      req.params.thoigian == "all"
+        ? (Vthoigian = "")
+        : (Vthoigian = req.params.thoigian);
+      req.params.diemden == "all"
+        ? (Vdiemden = "")
+        : (Vdiemden = req.params.diemden);
+      req.params.noikhoihanh == "all"
+        ? (Vnoikhoihanh = "")
+        : (Vnoikhoihanh = req.params.noikhoihanh);
+      req.params.khuvuc == "all"
+        ? (Vkhuvuc = "")
+        : (Vkhuvuc = req.params.khuvuc);
+      req.params.quocgia == "all"
+        ? (Vquocgia = "")
+        : (Vquocgia = req.params.quocgia);
       condition = {
-            quocgia: Vquocgia,
-            khuvuc: Vkhuvuc,
-            noikhoihanh: Vnoikhoihanh,
-            diemden: Vdiemden,
-            thoigian: Vthoigian
-          };
-      
+        quocgia: Vquocgia,
+        khuvuc: Vkhuvuc,
+        noikhoihanh: Vnoikhoihanh,
+        diemden: Vdiemden,
+        thoigian: Vthoigian,
+      };
+
       // if(req.params.thoigian == undefined||req.params.thoigian=="all"){
       //   condition = {
       //     quocgia: req.params.quocgia,
@@ -108,7 +147,6 @@ const tourControllers = {
       //     quocgia: req.params.quocgia,
       //   };
       // }
-      
 
       Tour.find(condition)
         .then((data) => {
@@ -127,7 +165,7 @@ const tourControllers = {
       // const tours = await Tour.find();
       // res.status(200).json(req.body);
 
-      Tour.find({giamgia : /^(1|2|3|4|5|6|7|8|9)/ })
+      Tour.find({ giamgia: /^(1|2|3|4|5|6|7|8|9)/ })
         .then((data) => {
           res.json(data);
         })

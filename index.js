@@ -19,7 +19,14 @@ mongoose.connect(('mongodb://localhost:27017/Web2_EPTravel'), () =>{
 
 
 
-app.use(bodyParser.json({limit:"50mb"}));
+// app.use(bodyParser.json({limit:"50mb"}));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true}))
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+
 app.use(cors());
 app.use(morgan("common"));
 app.use(cookieParser());

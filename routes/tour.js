@@ -1,9 +1,11 @@
 const tourControllers = require('../controllers/tourControllers');
-
+const multer = require("multer");
 const router = require('express').Router();
 
 //add tour
-router.post('/addtour', tourControllers.addTour)
+router.post('/addtour',tourControllers.uploadTourImg,tourControllers.addTour,tourControllers.reSetImg)
+
+
 router.get('/', tourControllers.getAllTour)
 // router.get('/:quocgia', tourControllers.getCondition)
 // router.get('/:quocgia/:khuvuc', tourControllers.getCondition)
