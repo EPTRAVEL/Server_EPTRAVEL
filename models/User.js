@@ -40,13 +40,16 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     avarImg: {
-      type: String
+      type: String,
     },
-
+    FavId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Fav",
+    },
     admin: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   { timestamps: true }
 );

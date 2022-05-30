@@ -51,7 +51,9 @@ app.use("/v1/tour", tourRoute);
 //Tin túc Routers
 app.use("/tintuc", tintucRoute);
 
-
+//Fav routers
+const favRoute = require("./routes/fav");
+app.use("/fav", favRoute)
 
 // cho phép dùng ảnh của user
 const path = require("path");

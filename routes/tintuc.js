@@ -9,18 +9,18 @@ const router = require("express").Router();
 // //   tintucControllers.reSetImg
 // );
 
-router.post("/addtintuc", tintucControllers.addTintuc)
+router.post("/add", tintucControllers.uploadTintucImg ,tintucControllers.addTintuc, tintucControllers.reSetImg)
 
-// router.get("/", tintucControllers.getAllTintuc);
+router.get("/", tintucControllers.getAllTintuc);
 
 // router.get("/khuyenmai", tintucControllers.getTintucKhuyenMai);
 
-// router.patch(
-//   "/:id",
-//   tintucControllers.uploadTintucImg,
-//   tintucControllers.patchTintuc,
-//   tintucControllers.reSetImg
-// );
+router.patch(
+  "/:id",
+  tintucControllers.uploadTintucImg,
+  tintucControllers.patchTintuc,
+  tintucControllers.reSetImg
+);
 
-// router.delete("/:id", tintucControllers.deleteTintuc);
+router.delete("/:id", tintucControllers.deleteTintuc);
 module.exports = router;

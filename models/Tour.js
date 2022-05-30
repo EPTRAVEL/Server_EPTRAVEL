@@ -64,6 +64,10 @@ const tourSchema = new mongoose.Schema(
     khuvuc: {
       type: String,
     },
+    Fav: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Fav",
+    },
   },
   { timestamps: true }
 );
