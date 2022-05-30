@@ -1,12 +1,15 @@
 const Tour = require("../models/Tour");
 const multer = require("multer");
-var imgPathArr = []; 
+const fs = require("fs");
+const path = require("path");
+
+var imgPathArr = [];
 const tourControllers = {
   uploadTourImg: async (req, res, next) => {
     var storage = multer.diskStorage({
       destination: "assets/image/tours",
       filename: (req, file, cb) => {
-        let nameTemp = `${Date.now()}-${file.originalname}`
+        let nameTemp = `${Date.now()}-${file.originalname}`;
         cb(null, nameTemp);
         imgPathArr.push(nameTemp);
       },
@@ -16,22 +19,22 @@ const tourControllers = {
     }).any("tourImg");
     upload(req, res, (err) => {
       if (err) {
-        console.log("Lỗi upload 1: " + err.message)
+        console.log("Lỗi upload 1: " + err.message);
       } else {
-        console.log(upload = multer({
-          storage: storage,
-        }).array("tourImg1"))
+        console.log(
+          (upload = multer({
+            storage: storage,
+          }).array("tourImg1"))
+        );
         next();
       }
     });
   },
-  
- 
 
-  addTour: async (req, res, next)=> {
-    console.log(req.body.ten_tour)
+  addTour: async (req, res, next) => {
+    console.log(req.body.ten_tour);
     let newTour = await new Tour({
-      ten_tour: req.body.ten_tour, 
+      ten_tour: req.body.ten_tour,
       ma_tour: req.body.ma_tour,
       noikhoihanh: req.body.noikhoihanh,
       sochoconnhan: req.body.sochoconnhan,
@@ -52,12 +55,11 @@ const tourControllers = {
       khuvuc: req.body.khuvuc,
       images: imgPathArr,
     });
-    
+
     try {
-      
       const tour = await newTour.save();
       res.status(200).json({ message: "success", newTour });
-      next()
+      next();
     } catch (err) {
       res.status(500).json(err);
     }
@@ -76,7 +78,7 @@ const tourControllers = {
     }
   },
   reSetImg: async (req, res, next) => {
-    imgPathArr = []
+    imgPathArr = [];
   },
   getCondition: async (req, res) => {
     try {
@@ -176,36 +178,44 @@ const tourControllers = {
       res.status(500).json(err);
     }
   },
-  patchTour: async (req, res) => {
+  patchTour: async (req, res, next) => {
     try {
-      // theo mongod
-      const patchTour = await Tour.updateOne(
-        { _id: req.params.id },
-        {
-          $set: {
-            ten_tour: req.body.ten_tour,
-            images: req.body.images,
-            noikhoihanh: req.body.noikhoihanh,
-            sochoconnhan: req.body.sochoconnhan,
-            diemden: req.body.diemden,
-            ngaykhoihanh: req.body.ngaykhoihanh,
-            noidungchitiet: req.body.noidungchitiet,
-            diadiemthamquan: req.body.diadiemthamquan,
-            phuongtiendichuyen: req.body.phuongtiendichuyen,
-            khachsan: req.body.khachsan,
-            lichtrinh: req.body.lichtrinh,
-            giatiennguoilon: req.body.giatiennguoilon,
-            giatientreem: req.body.giatientreem,
-            giatientrenho: req.body.giatientrenho,
-            giatienembe: req.body.giatienembe,
-            giamgia: req.body.giamgia,
-            phuthu: req.body.phuthu,
-            quocgia: req.body.quocgia,
-            khuvuc: req.body.khuvuc,
-          },
-        }
-      );
+      const tourUpdate = await Tour.findById(req.params.id);
+      // remove current Img
+      for (let i = 0; i < tourUpdate.images.length; i++) {
+        const pathImg = path.resolve(
+          `assets/image/tours/${tourUpdate.images[i]}`
+        );
+
+        fs.unlinkSync(pathImg);
+      }
+
+      // update Database
+      await tourUpdate.updateOne({
+        ten_tour: req.body.ten_tour,
+        ma_tour: req.body.ma_tour,
+        noikhoihanh: req.body.noikhoihanh,
+        sochoconnhan: req.body.sochoconnhan,
+        diemden: req.body.diemden,
+        ngaykhoihanh: req.body.ngaykhoihanh,
+        noidungchitiet: req.body.noidungchitiet,
+        diadiemthamquan: req.body.diadiemthamquan,
+        phuongtiendichuyen: req.body.phuongtiendichuyen,
+        khachsan: req.body.khachsan,
+        lichtrinh: req.body.lichtrinh,
+        giatiennguoilon: req.body.giatiennguoilon,
+        giatientreem: req.body.giatientreem,
+        giatientrenho: req.body.giatientrenho,
+        giatienembe: req.body.giatienembe,
+        giamgia: req.body.giamgia,
+        phuthu: req.body.phuthu,
+        quocgia: req.body.quocgia,
+        khuvuc: req.body.khuvuc,
+        images: imgPathArr,
+      });
+
       res.json({ message: "Update success" });
+      next();
     } catch (err) {
       res.json({ Error: err.message });
     }
@@ -213,6 +223,16 @@ const tourControllers = {
 
   deleteTour: async (req, res) => {
     try {
+      const tourFind = await Tour.findById(req.params.id);
+      console.log(req.params.id)
+      // remove current Img
+      for (let i = 0; i < tourFind.images.length; i++) {
+        const pathImg = path.resolve(
+          `assets/image/tours/${tourFind.images[i]}`
+        );
+        fs.unlinkSync(pathImg);
+      }
+
       await Tour.remove({ _id: req.params.id });
       res.json({ message: "Delete success" });
     } catch (err) {

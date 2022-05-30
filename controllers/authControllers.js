@@ -10,9 +10,10 @@ const authController = {
     var storage = multer.diskStorage({
       destination: "assets/image/avatar user",
       filename: (req, file, cb) => {
-        cb(null, `${Date.now()}--${file.originalname}`);
+        imgPath = ""+`${Date.now()}--${file.originalname}`;
+        cb(null, `${imgPath}`);
         // console.log(file.originalname)
-        imgPath = 'avatar user/'+`${Date.now()}--${file.originalname}`;
+        
       },
     });
     maxSize = 10 * 1024 * 1024;
