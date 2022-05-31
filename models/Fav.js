@@ -3,15 +3,9 @@ const mongoose = require("mongoose");
 const FavSchema = new mongoose.Schema(
   {
     UserId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String
     },
-    TourId: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Tour",
-      },
-    ],
+    TourId: [String],
     SubTotal: {
       type: Number,
       default: 0,
