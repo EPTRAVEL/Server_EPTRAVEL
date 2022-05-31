@@ -11,14 +11,14 @@ router.post(
 );
 
 router.get("/", tourControllers.getAllTour);
-// router.get('/:quocgia', tourControllers.getCondition)
+router.get('/:quocgia', tourControllers.getCondition)
 // router.get('/:quocgia/:khuvuc', tourControllers.getCondition)
 // router.get('/:quocgia/:khuvuc/:noikhoihanh', tourControllers.getCondition)
 // router.get('/:quocgia/:khuvuc/:noikhoihanh/:diemden', tourControllers.getCondition)
-router.get(
-  "/:quocgia/:khuvuc/:noikhoihanh/:diemden:/:thoigian",
-  tourControllers.getCondition
-);
+// router.get(
+//   "/:quocgia/:khuvuc/:noikhoihanh/:diemden:/:thoigian",
+//   tourControllers.getCondition
+// );
 
 router.get("/khuyenmai", tourControllers.getTourKhuyenMai);
 

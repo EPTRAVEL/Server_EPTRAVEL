@@ -83,33 +83,45 @@ const tourControllers = {
   getCondition: async (req, res) => {
     try {
       var condition = "";
-      var Vquocgia = "";
-      var Vkhuvuc = "";
-      var Vnoikhoihanh = "";
-      var Vdiemden = "";
-      var Vthoigian = "";
-      req.params.thoigian == "all"
-        ? (Vthoigian = "")
-        : (Vthoigian = req.params.thoigian);
-      req.params.diemden == "all"
-        ? (Vdiemden = "")
-        : (Vdiemden = req.params.diemden);
-      req.params.noikhoihanh == "all"
-        ? (Vnoikhoihanh = "")
-        : (Vnoikhoihanh = req.params.noikhoihanh);
-      req.params.khuvuc == "all"
-        ? (Vkhuvuc = "")
-        : (Vkhuvuc = req.params.khuvuc);
-      req.params.quocgia == "all"
-        ? (Vquocgia = "")
-        : (Vquocgia = req.params.quocgia);
-      condition = {
-        quocgia: Vquocgia,
-        khuvuc: Vkhuvuc,
-        noikhoihanh: Vnoikhoihanh,
-        diemden: Vdiemden,
-        thoigian: Vthoigian,
-      };
+      if (req.params.quocgia == "trongnuoc") {
+        condition = {
+          quocgia: "Tour du lịch trong nước",
+        };
+      }
+      if (req.params.quocgia == "ngoainuoc") {
+        condition = {
+          quocgia: "Tour du lịch nước ngoài",
+        };
+      }
+
+      // var condition = "";
+      // var Vquocgia = "";
+      // var Vkhuvuc = "";
+      // var Vnoikhoihanh = "";
+      // var Vdiemden = "";
+      // var Vthoigian = "";
+      // req.params.thoigian == "all"
+      //   ? (Vthoigian = "")
+      //   : (Vthoigian = req.params.thoigian);
+      // req.params.diemden == "all"
+      //   ? (Vdiemden = "")
+      //   : (Vdiemden = req.params.diemden);
+      // req.params.noikhoihanh == "all"
+      //   ? (Vnoikhoihanh = "")
+      //   : (Vnoikhoihanh = req.params.noikhoihanh);
+      // req.params.khuvuc == "all"
+      //   ? (Vkhuvuc = "")
+      //   : (Vkhuvuc = req.params.khuvuc);
+      // req.params.quocgia == "all"
+      //   ? (Vquocgia = "")
+      //   : (Vquocgia = req.params.quocgia);
+      // condition = {
+      //   quocgia: Vquocgia,
+      //   khuvuc: Vkhuvuc,
+      //   noikhoihanh: Vnoikhoihanh,
+      //   diemden: Vdiemden,
+      //   thoigian: Vthoigian,
+      // };
 
       // if(req.params.thoigian == undefined||req.params.thoigian=="all"){
       //   condition = {
@@ -224,7 +236,7 @@ const tourControllers = {
   deleteTour: async (req, res) => {
     try {
       const tourFind = await Tour.findById(req.params.id);
-      console.log(req.params.id)
+      console.log(req.params.id);
       // remove current Img
       for (let i = 0; i < tourFind.images.length; i++) {
         const pathImg = path.resolve(
