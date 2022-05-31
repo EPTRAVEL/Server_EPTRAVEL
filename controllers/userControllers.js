@@ -10,6 +10,16 @@ const userController = {
       res.status(500).json(err);
     }
   },
+  getUsersId: async (req, res) => {
+    try {
+      const users = await User.findById({
+        _id: req.params.userId
+      });
+      res.status(200).json(users);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 
   //delete user
   deleteUser: async (req, res) => {

@@ -173,6 +173,21 @@ const tourControllers = {
       res.status(500).json(err);
     }
   },
+  getTourById: async (req, res) => {
+    try {
+      Tour.find({
+        _id: req.params.id
+      })
+        .then((data) => {
+          res.json(data);
+        })
+        .catch((error) => {
+          res.json({ Error: error.message });
+        });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 
   getTourKhuyenMai: async (req, res) => {
     try {

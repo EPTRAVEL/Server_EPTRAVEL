@@ -11,6 +11,7 @@ router.post(
 );
 
 router.get("/", tourControllers.getAllTour);
+router.get('/id/:id', tourControllers.getTourById)
 router.get('/:quocgia', tourControllers.getCondition)
 // router.get('/:quocgia/:khuvuc', tourControllers.getCondition)
 // router.get('/:quocgia/:khuvuc/:noikhoihanh', tourControllers.getCondition)
