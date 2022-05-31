@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const InvoiceSchema = new mongoose.Schema(
   {
     UserId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tour",
     },
     TourId: {
       type: String,
@@ -16,4 +17,4 @@ const InvoiceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Invoice", FavSchema);
+module.exports = mongoose.model("Invoice", InvoiceSchema);
